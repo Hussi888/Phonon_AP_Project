@@ -10,6 +10,8 @@ var image;
 var rotation = 0;
 var flip = false;
 
+var filters_enabled = false;
+
 var fit = true;
 
 var sidebarHidden = false;
@@ -141,6 +143,8 @@ function setFiltersPrep() {
 
     var parent = document.getElementById('filter-row')
     parent.textContent = '';
+    if(!filters_enabled)
+        return;
     source = document.createElement('img');
     source.src = 'data:image/png;base64, ' + image.smol;
 
@@ -313,6 +317,14 @@ ipc.on('openFile', function (event, image) {
 ipc.on('rotateImage', function (event, data) {
     rotateImage()
 });
+
+ipc.on('toggle-filters', function (event, data) {
+    filters_enabled = !filters_enabled;
+    if(filters_enabled)
+        setFiltersPrep()
+
+});
+
 ipc.on('flipImage', function (event, data) {
     flipImage()
 });

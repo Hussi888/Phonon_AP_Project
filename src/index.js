@@ -66,6 +66,7 @@ const renderImage = () => {
 
 const sendFolderStructure = () => {
   win.webContents.send('openFolder', currGallery);
+  renderImage();
 }
 loadFolder(app.getAppPath());
 
@@ -162,10 +163,10 @@ function getMenu() {
           win.webContents.send('flipImage');
         }
       },{
-        label: 'Crop',
-        accelerator: 'Y',
+        label: 'Filters',
+        accelerator: 'ctrl+e',
         click: () => {
-          win.webContents.send('cropImage');
+          win.webContents.send('toggle-filters');
         }
       }]
     },
@@ -293,6 +294,7 @@ ipc.on('saveImage', function (event, data) {
     renderImage();
   });
 });
+
 
 // DEBUG
 ipc.on('debug', function (event, data) {
